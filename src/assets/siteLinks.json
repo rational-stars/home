@@ -1,0 +1,22 @@
+[
+  {
+    "icon": "Blog",
+    "name": "博客",
+    "link": "https://rational-stars.top/"
+  },
+  {
+    "icon": "Cloud",
+    "name": "网盘",
+    "link": "https://alist.rational-stars.top/"
+  },
+  {
+    "icon": "Compass",
+    "name": "免费图床",
+    "link": "https://tg.rational-stars.top/"
+  },
+  {
+    "icon": "Book",
+    "name": "关于",
+    "link": "https://rational-stars.top/about"
+  }
+]
