@@ -70,11 +70,11 @@ export default ({ mode }) =>
               sizes: "128x128",
               type: "image/png",
             },
-            {
-              src: "/images/icon/144.png",
-              sizes: "144x144",
-              type: "image/png",
-            },
+            // {
+            //   src: "/images/icon/144.png",
+            //   sizes: "144x144",
+            //   type: "image/png",
+            // },
             {
               src: "/images/icon/192.png",
               sizes: "192x192",
