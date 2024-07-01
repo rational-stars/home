@@ -1,7 +1,7 @@
 <template>
   <div :class="store.backgroundShow ? 'cover show' : 'cover'">
     <video class="bg" autoplay loop muted playsinline>
-      <source src="https://yun.rational-stars.top/video/2.mp4" type="video/mp4">
+      <source src="https://sink.rational-stars.top/home-bgc-wlop" type="video/mp4">
     </video>
     <!-- <img v-show="store.imgLoadStatus" class="bg" alt="cover" :src="bgUrl" @load="imgLoadComplete"
       @error.once="imgLoadError" @animationend="imgAnimationEnd" /> -->
