@@ -84,12 +84,14 @@ const signature = CryptoJS.HmacSHA1(signatureString, passwordMd5).toString(Crypt
 const authorization = `UPYUN ${operator}:${signature}`;
 
 export const getBgcList = async () => {
-  const res = await fetch(`http://v0.api.upyun.com/stars-img/home-wlop-video`, {
+  const res = await fetch(`https://v0.api.upyun.com/stars-img/home-wlop-video`, {
     headers: {
       'Authorization': authorization,
       'x-Date': date,
       'Accept': 'application/json',
     }
-  });
+  })
+  console.log("向前🇨🇳 ====> res:", res)
+
   return await res.json();
 };
