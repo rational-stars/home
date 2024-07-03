@@ -1,7 +1,7 @@
 <template>
   <div :class="store.backgroundShow ? 'cover show' : 'cover'">
-    <video class="bg" autoplay loop muted playsinline>
-      <source src="https://yun.rational-stars.top/video/2.mp4" type="video/mp4">
+    <video class="bg" :key="cc" autoplay loop muted playsinline @error="imgLoadError">
+      <source :src="cc" type="video/mp4">
     </video>
     <!-- <img v-show="store.imgLoadStatus" class="bg" alt="cover" :src="bgUrl" @load="imgLoadComplete"
       @error.once="imgLoadError" @animationend="imgAnimationEnd" /> -->
@@ -17,27 +17,33 @@
 <script setup>
 import { mainStore } from "@/store";
 import { Error } from "@icon-park/vue-next";
+import { getBgcList } from '@/api'
 
 const store = mainStore();
 const bgUrl = ref(null);
+let cc = ref('')
 const imgTimeout = ref(null);
 const emit = defineEmits(["loadComplete"]);
+const baseUrl = 'https://yun.rational-stars.top'
 
-// 壁纸随机数
-// 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
-const bgRandom = Math.floor(Math.random() * 10 + 1);
 
 // 更换壁纸链接
-const changeBg = (type) => {
-  if (type == 0) {
-    bgUrl.value = `https://yun.rational-stars.top/randomBg/bg${bgRandom}.jpg`;
-  } else if (type == 1) {
-    bgUrl.value = "https://api.dujin.org/bing/1920.php";
-  } else if (type == 2) {
-    bgUrl.value = "https://api.aixiaowai.cn/gqapi/gqapi.php";
-  } else if (type == 3) {
-    bgUrl.value = "https://api.aixiaowai.cn/api/api.php";
+const randomFun = (number) => {
+  let historyRandom = Number(localStorage.getItem('historyRandom'))
+  const val = Math.floor(Math.random() * number);
+  if (val !== historyRandom) return val
+  else return randomFun(number)
+}
+const changeBg = async (type) => {
+  const res = await getBgcList()
+  if (res.files.length <= 1) {
+    return cc.value = baseUrl + '/home-wlop-video/' + res.files[0].name
   }
+  const bgRandom = randomFun(res.files.length)
+  localStorage.setItem('historyRandom', bgRandom)
+  cc.value = baseUrl + '/home-wlop-video/' + res.files[bgRandom].name
+  imgLoadComplete()
+  imgAnimationEnd()
 };
 
 // 图片加载完成
@@ -56,8 +62,7 @@ const imgAnimationEnd = () => {
   // 加载完成事件
   emit("loadComplete");
 };
-imgLoadComplete()
-imgAnimationEnd()
+
 // 图片显示失败
 const imgLoadError = () => {
   console.error("壁纸加载失败：", bgUrl.value);
@@ -74,6 +79,8 @@ const imgLoadError = () => {
 onMounted(() => {
   // 加载壁纸
   changeBg(store.coverType);
+
+  console.log("向前🇨🇳 ====> changeBg:", bgUrl.value)
 });
 
 onBeforeUnmount(() => {

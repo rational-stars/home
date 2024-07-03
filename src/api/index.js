@@ -72,3 +72,24 @@ export const getOtherWeather = async () => {
   const res = await fetch("https://api.oioweb.cn/api/weather/GetWeather");
   return await res.json();
 };
+import CryptoJS from 'crypto-js'; // 需要安装 crypto-js 库
+
+const operator = 'api';
+const method = 'GET';
+const uri = '/stars-img/home-wlop-video';
+const passwordMd5 = CryptoJS.MD5('BqCiu83lJupOnT68GuhRWSA3Xcsn3kAl').toString();
+const date = new Date().toUTCString();
+const signatureString = `${method}&${uri}&${date}`;
+const signature = CryptoJS.HmacSHA1(signatureString, passwordMd5).toString(CryptoJS.enc.Base64);
+const authorization = `UPYUN ${operator}:${signature}`;
+
+export const getBgcList = async () => {
+  const res = await fetch(`http://v0.api.upyun.com/stars-img/home-wlop-video`, {
+    headers: {
+      'Authorization': authorization,
+      'x-Date': date,
+      'Accept': 'application/json',
+    }
+  });
+  return await res.json();
+};
