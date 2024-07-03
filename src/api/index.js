@@ -1,5 +1,6 @@
 // import axios from "axios";
 import fetchJsonp from "fetch-jsonp";
+import CryptoJS from 'crypto-js'; // 需要安装 crypto-js 库
 
 /**
  * 音乐播放器
@@ -72,7 +73,6 @@ export const getOtherWeather = async () => {
   const res = await fetch("https://api.oioweb.cn/api/weather/GetWeather");
   return await res.json();
 };
-import CryptoJS from 'crypto-js'; // 需要安装 crypto-js 库
 
 const operator = 'api';
 const method = 'GET';
