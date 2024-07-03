@@ -34,7 +34,7 @@ const randomFun = (number) => {
   if (val !== historyRandom) return val
   else return randomFun(number)
 }
-const changeBg = async (type) => {
+const changeBg = async () => {
   const res = await getBgcList()
   if (res.files.length <= 1) {
     return cc.value = baseUrl + '/home-wlop-video/' + res.files[0].name
