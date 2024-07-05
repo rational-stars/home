@@ -2,10 +2,15 @@
   <!-- 加载 -->
   <Loading />
   <!-- 壁纸 -->
-  <Background @loadComplete="loadComplete" />
+  <Background ref="BackgroundRef" @loadComplete="loadComplete"  />
   <!-- 主界面 -->
   <Transition name="fade" mode="out-in">
+
     <main id="main" v-if="store.imgLoadStatus">
+    <div class="hvr-grow resetBgc-box">
+       <resetBgc @resetBgc="cc" />
+    </div>
+
       <div class="container" v-show="!store.backgroundShow">
         <section class="all" v-show="!store.setOpenState">
           <MainLeft />
@@ -30,6 +35,7 @@
 </template>
 
 <script setup>
+import resetBgc from "./components/resetBgc.vue";
 import { helloInit, checkDays } from "@/utils/getTime.js";
 import { HamburgerButton, CloseSmall } from "@icon-park/vue-next";
 import { mainStore } from "@/store";
@@ -45,7 +51,13 @@ import cursorInit from "@/utils/cursor.js";
 import config from "@/../package.json";
 
 const store = mainStore();
+const BackgroundRef = ref(null);
 
+const cc = () => {
+  console.log("cc");
+  // BackgroundRef.value
+  console.log("向前🇨🇳 ====> BackgroundRef.value:", BackgroundRef.value.resetBgc())
+};
 // 页面宽度
 const getWidth = () => {
   store.setInnerWidth(window.innerWidth);
@@ -122,6 +134,11 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+.resetBgc-box{
+  position: absolute;
+  top: 20px;
+  right: 0;
+}
 #main {
   position: absolute;
   top: 0;

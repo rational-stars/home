@@ -1,7 +1,7 @@
 <template>
   <div :class="store.backgroundShow ? 'cover show' : 'cover'">
-    <video class="bg" :key="cc" autoplay loop muted playsinline @error="imgLoadError">
-      <source :src="cc" type="video/mp4">
+    <video class="bg" :key="bgcUrl" autoplay loop muted playsinline @error="imgLoadError">
+      <source :src="bgcUrl" type="video/mp4">
     </video>
     <!-- <img v-show="store.imgLoadStatus" class="bg" alt="cover" :src="bgUrl" @load="imgLoadComplete"
       @error.once="imgLoadError" @animationend="imgAnimationEnd" /> -->
@@ -19,13 +19,15 @@ import { mainStore } from "@/store";
 import { Error } from "@icon-park/vue-next";
 import { getBgcList } from '@/api'
 
+
+
 const store = mainStore();
 const bgUrl = ref(null);
-let cc = ref('')
+let bgcUrl = ref('')
 const imgTimeout = ref(null);
 const emit = defineEmits(["loadComplete"]);
 const baseUrl = 'https://yun.rational-stars.top'
-
+const bgcList = ref([])
 
 // 更换壁纸链接
 const randomFun = (number) => {
@@ -33,15 +35,21 @@ const randomFun = (number) => {
   const val = Math.floor(Math.random() * number);
   if (val !== historyRandom) return val
   else return randomFun(number)
+
+}
+const resetBgc = () => {
+  const bgRandom = randomFun(bgcList.value.length)
+  localStorage.setItem('historyRandom', bgRandom)
+  bgcUrl.value = baseUrl + '/home-wlop-video/' + bgcList.value[bgRandom]?.name
+
 }
 const changeBg = async () => {
   const res = await getBgcList()
+  bgcList.value = res.files
   if (res.files.length <= 1) {
-    return cc.value = baseUrl + '/home-wlop-video/' + res.files[0].name
+    return bgcUrl.value = baseUrl + '/home-wlop-video/' + res.files[0].name
   }
-  const bgRandom = randomFun(res.files.length)
-  localStorage.setItem('historyRandom', bgRandom)
-  cc.value = baseUrl + '/home-wlop-video/' + res.files[bgRandom].name
+  resetBgc()
   imgLoadComplete()
   imgAnimationEnd()
 };
@@ -86,6 +94,10 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearTimeout(imgTimeout.value);
 });
+defineExpose({
+  resetBgc,
+});
+
 </script>
 
 <style lang="scss" scoped>
