@@ -29,6 +29,8 @@ const emit = defineEmits(["loadComplete"]);
 const baseUrl = 'https://yun.rational-stars.top'
 const bgcList = ref([])
 
+
+
 // 更换壁纸链接
 const randomFun = (number) => {
   let historyRandom = Number(localStorage.getItem('historyRandom'))
