@@ -1,5 +1,4 @@
 <template>
-  <audio src="https://yun.rational-stars.top/audio/%E8%87%B4%E6%A9%A1%E6%A0%91.mp3" autoplay></audio>
 
   <!-- 加载 -->
   <Loading />
@@ -8,7 +7,7 @@
   <!-- 主界面 -->
   <Transition name="fade" mode="out-in">
 
-    <main id="main" v-if="store.imgLoadStatus" @click="playA">
+    <main id="main" v-if="store.imgLoadStatus" >
       <div class="hvr-grow resetBgc-box">
         <resetBgc @resetBgc="cc" />
       </div>
@@ -54,10 +53,7 @@ import config from "@/../package.json";
 
 const store = mainStore();
 const BackgroundRef = ref(null);
-const playA = () => {
-  const audio = document.querySelector('audio')
-  audio.play()
-}
+
 const cc = () => {
   console.log("cc");
   // BackgroundRef.value
@@ -91,7 +87,7 @@ watch(
 onMounted(() => {
   // 自定义鼠标
   cursorInit();
-  playA()
+  // playA()
   // 屏蔽右键
   document.oncontextmenu = () => {
     ElMessage({

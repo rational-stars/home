@@ -1,9 +1,11 @@
 <template>
   <!-- 基本信息 -->
+  <audio src="https://yun.rational-stars.top/audio/%E8%87%B4%E6%A9%A1%E6%A0%91.mp3" autoplay></audio>
+
   <div class="message">
     <!-- Logo -->
-    <div class="logo">
-      <img class="logo-img" :src="siteLogo" alt="logo" />
+    <div class="logo ">
+      <img class="logo-img" @click="playA" @mousemove="playA" @mouseleave="playA(false)" :src="siteLogo" alt="logo" />
       <div :class="{ name: true, 'text-hidden': true, long: siteUrl[0].length >= 6 }">
         <span class="bg">{{ siteUrl[0] }}</span>
         <span class="sm">{{ siteUrl[1] }}</span>
@@ -35,7 +37,14 @@ import { QuoteLeft, QuoteRight } from "@vicons/fa";
 import { Error } from "@icon-park/vue-next";
 import { mainStore } from "@/store";
 const store = mainStore();
-
+const playA = (play = true) => {
+  const audio = document.querySelector('audio')
+  if (play) {
+    audio.play()
+  } else {
+    audio.pause()
+  }
+}
 // 主页站点logo
 const siteLogo = import.meta.env.VITE_SITE_MAIN_LOGO;
 // 站点链接
@@ -88,6 +97,25 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+// .pause {
+//   animation-play-state: paused;
+// }
+
+// .play-rotate {
+//   animation-play-state: running;
+// }
+
+@keyframes rotate {
+  0% {
+
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .message {
   .logo {
     display: flex;
@@ -98,10 +126,11 @@ watch(
     .logo-img {
       border-radius: 50%;
       width: 120px;
-      transition: transform 0.5s;
+      // transition: transform 5s;
 
       &:hover {
-        transform: rotate(360deg) scale(1.2);
+        transform: scale(1.2);
+        animation: rotate 2.5s linear infinite;
       }
     }
 

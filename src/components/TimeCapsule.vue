@@ -22,6 +22,8 @@
         :duration="2"
       /> -->
     </div>
+    
+    <!-- <h3 v-if="store.boxOpenState" style="margin-top: 50%; transform: translateY(-50%);">把鼠标放到头像上触发惊喜喔 <br/>记得把声音调小一点</h3> -->
   </div>
 </template>
 

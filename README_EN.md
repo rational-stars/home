@@ -4,7 +4,7 @@ English | [Chinese](./README.md)
 <strong><h2>向前の主页</h2></strong>
 Simple little homepage, had enough of the original one and made a new one
 </p>
-
+此项目基于 ![imsyy](https://github.com/imsyy/home) 修改
 ![向前の主页](https://s2.loli.net/2022/07/14/K5JigfvDoNewtuS.webp)
 
 > The logo font on the home page has been compressed, so if you use a font other than this logo, it will change back to the default font, Here is the [full font](https://file.4everland.app/font/Other/Pacifico-Regular.ttf)
