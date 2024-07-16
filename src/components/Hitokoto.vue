@@ -12,7 +12,7 @@
     <Transition name="el-fade-in-linear" mode="out-in">
       <div :key="hitokotoData.text" class="content" @click="updateHitokoto">
         <span class="text">{{ hitokotoData.text }}</span>
-        <span class="from">-「&nbsp;{{ hitokotoData.from }}&nbsp;」</span>
+        <span class="from">「&nbsp;{{ hitokotoData.from }}&nbsp;」</span>
       </div>
     </Transition>
   </div>
@@ -20,7 +20,7 @@
 
 <script setup>
 import { MusicMenu, Error } from "@icon-park/vue-next";
-import { getHitokoto } from "@/api";
+import { getHitokoto, getLove } from "@/api";
 import { mainStore } from "@/store";
 import debounce from "@/utils/debounce.js";
 
@@ -29,11 +29,34 @@ const store = mainStore();
 // 开启音乐面板按钮显隐
 const openMusicShow = ref(false);
 
-// 一言数据
+// 数据
 const hitokotoData = reactive({
   text: "这里应该显示一句话",
-  from: "無名",
+  from: "向前",
 });
+
+// 获取爱情公寓一言数据
+const getLoveData = async () => {
+  getLove().then
+    ((res) => {
+      const result = res.split('—')
+      hitokotoData.text = result[0];
+      hitokotoData.from = result[2] || '向前';
+    })
+    .catch(() => {
+      ElMessage({
+        message: "一言获取失败",
+        icon: h(Error, {
+          theme: "filled",
+          fill: "#efefef",
+        }),
+      });
+      hitokotoData.text = "这里应该显示一句话";
+      hitokotoData.from = "向前";
+    });
+
+};
+
 
 // 获取一言数据
 const getHitokotoData = () => {
@@ -51,7 +74,7 @@ const getHitokotoData = () => {
         }),
       });
       hitokotoData.text = "这里应该显示一句话";
-      hitokotoData.from = "無名";
+      hitokotoData.from = "向前";
     });
 };
 
@@ -59,12 +82,12 @@ const getHitokotoData = () => {
 const updateHitokoto = () => {
   // 防抖
   debounce(() => {
-    getHitokotoData();
+    getLoveData();
   }, 500);
 };
 
 onMounted(() => {
-  getHitokotoData();
+  getLoveData();
 });
 </script>
 

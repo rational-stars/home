@@ -12,7 +12,8 @@
     el: '.swiper-pagination',
     clickable: true,
     bulletElement: 'div',
-  }" :mousewheel="true">
+  }" >
+  <!-- :mousewheel="true" -->
       <SwiperSlide v-for="site in siteLinksList" :key="site">
         <el-row class="link-all" :gutter="20">
           <el-col v-for="(item, index) in site" :span="8" :key="item">

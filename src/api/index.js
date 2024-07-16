@@ -48,6 +48,11 @@ export const getHitokoto = async () => {
   const res = await fetch("https://v1.hitokoto.cn");
   return await res.json();
 };
+// 获取一言数据
+export const getLove = async () => {
+  const res = await fetch("https://api.lolimi.cn/API/aiqing/api.php");
+  return res.text();
+};
 
 /**
  * 天气

@@ -8,6 +8,8 @@
   <Transition name="fade" mode="out-in">
 
     <main id="main" v-if="store.imgLoadStatus" >
+
+
       <div class="hvr-grow resetBgc-box">
         <resetBgc @resetBgc="cc" />
       </div>
