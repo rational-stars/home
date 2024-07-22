@@ -5,7 +5,7 @@
   <!-- 壁纸 -->
   <Background ref="BackgroundRef" @loadComplete="loadComplete" />
   <!-- 主界面 -->
-  <Transition name="fade" mode="out-in">
+  <Transition   name="fade" mode="out-in">
 
     <main id="main" v-if="store.imgLoadStatus" >
 

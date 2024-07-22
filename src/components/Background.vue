@@ -1,6 +1,6 @@
 <template>
   <div :class="store.backgroundShow ? 'cover show' : 'cover'">
-    <video class="bg" :key="bgcUrl" autoplay loop muted playsinline @error="imgLoadError">
+    <video @loadeddata="loadeddata" class="bg" :key="bgcUrl" autoplay loop muted playsinline @error="imgLoadError">
       <source :src="bgcUrl" type="video/mp4">
     </video>
     <!-- <img v-show="store.imgLoadStatus" class="bg" alt="cover" :src="bgUrl" @load="imgLoadComplete"
@@ -29,7 +29,10 @@ const emit = defineEmits(["loadComplete"]);
 const baseUrl = 'https://yun.rational-stars.top'
 const bgcList = ref([])
 
-
+const loadeddata = () => {
+  imgLoadComplete()
+  imgAnimationEnd()
+}
 
 // 更换壁纸链接
 const randomFun = (number) => {
@@ -46,14 +49,15 @@ const resetBgc = () => {
 
 }
 const changeBg = async () => {
+  store.setImgLoadStatus(false);
+
   const res = await getBgcList()
   bgcList.value = res.files
   if (res.files.length <= 1) {
     return bgcUrl.value = baseUrl + '/home-wlop-video/' + res.files[0].name
   }
   resetBgc()
-  imgLoadComplete()
-  imgAnimationEnd()
+  loadeddata()
 };
 
 // 图片加载完成
@@ -68,7 +72,6 @@ const imgLoadComplete = () => {
 
 // 图片动画完成
 const imgAnimationEnd = () => {
-  console.log("壁纸加载且动画完成");
   // 加载完成事件
   emit("loadComplete");
 };
