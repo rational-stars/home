@@ -50,8 +50,23 @@ export const getHitokoto = async () => {
 };
 // 获取一言数据
 export const getLove = async () => {
-  const res = await fetch("https://api.lolimi.cn/API/aiqing/api.php");
-  return res.text();
+  const params = {
+    type: 'text', // 或 'json'，看接口文档写你想要的格式
+  };
+  const query = new URLSearchParams(params).toString();
+  const url = `/api/API/du/api.php?${query}`;
+
+  try {
+    const res = await fetch(url, {
+      method: 'GET',
+    });
+    const data = await res.text(); // 或 .json() 如果你设置的是 type=json
+    console.log("❤️ getLove 成功:", data);
+    return data;
+  } catch (err) {
+    console.error("💥 getLove 失败:", err);
+    return '获取失败';
+  }
 };
 
 /**

@@ -93,6 +93,14 @@ export default ({ mode }) =>
     server: {
       port: "3000",
       open: true,
+      proxy: {
+        '/api': {
+          target: 'https://api.lolimi.cn',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api/, '')
+        }
+      }
+
     },
     resolve: {
       alias: [
