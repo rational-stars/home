@@ -54,7 +54,7 @@ export const getLove = async () => {
     type: 'text', // 或 'json'，看接口文档写你想要的格式
   };
   const query = new URLSearchParams(params).toString();
-  const url = `/api/API/du/api.php?${query}`;
+  const url = `https://api.lolimi.cn/api/API/du/api.php?${query}`;
 
   try {
     const res = await fetch(url, {
