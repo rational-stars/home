@@ -1,6 +1,6 @@
 // import axios from "axios";
 import fetchJsonp from "fetch-jsonp";
-import CryptoJS from 'crypto-js'; // 需要安装 crypto-js 库
+import CryptoJS from "crypto-js"; // 需要安装 crypto-js 库
 
 /**
  * 音乐播放器
@@ -51,21 +51,21 @@ export const getHitokoto = async () => {
 // 获取一言数据
 export const getLove = async () => {
   const params = {
-    type: 'text', // 或 'json'，看接口文档写你想要的格式
+    type: "text", // 或 'json'，看接口文档写你想要的格式
   };
   const query = new URLSearchParams(params).toString();
-  const url = `https://api.lolimi.cn/api/API/du/api.php?${query}`;
+  const url = `https://api.lolimi.cn/API/aiqing/api?${query}`;
 
   try {
     const res = await fetch(url, {
-      method: 'GET',
+      method: "GET",
     });
     const data = await res.text(); // 或 .json() 如果你设置的是 type=json
     console.log("❤️ getLove 成功:", data);
     return data;
   } catch (err) {
     console.error("💥 getLove 失败:", err);
-    return '获取失败';
+    return "获取失败";
   }
 };
 
@@ -94,10 +94,10 @@ export const getOtherWeather = async () => {
   return await res.json();
 };
 
-const operator = 'api';
-const method = 'GET';
-const uri = '/stars-img/home-wlop-video';
-const passwordMd5 = CryptoJS.MD5('BqCiu83lJupOnT68GuhRWSA3Xcsn3kAl').toString();
+const operator = "api";
+const method = "GET";
+const uri = "/stars-img/home-wlop-video";
+const passwordMd5 = CryptoJS.MD5("BqCiu83lJupOnT68GuhRWSA3Xcsn3kAl").toString();
 const date = new Date().toUTCString();
 const signatureString = `${method}&${uri}&${date}`;
 const signature = CryptoJS.HmacSHA1(signatureString, passwordMd5).toString(CryptoJS.enc.Base64);
@@ -106,12 +106,12 @@ const authorization = `UPYUN ${operator}:${signature}`;
 export const getBgcList = async () => {
   const res = await fetch(`https://v0.api.upyun.com/stars-img/home-wlop-video`, {
     headers: {
-      'Authorization': authorization,
-      'x-Date': date,
-      'Accept': 'application/json',
-    }
-  })
-  console.log("向前🇨🇳 ====> res:", res)
+      Authorization: authorization,
+      "x-Date": date,
+      Accept: "application/json",
+    },
+  });
+  console.log("向前🇨🇳 ====> res:", res);
 
   return await res.json();
 };
